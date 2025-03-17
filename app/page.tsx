@@ -41,6 +41,11 @@ export default function Home() {
   };
 
   return (
+
+    // adding a section to contain the content here messes with the "browser" in that the size is no longer constant across tabs if there's like less wide content in one place than another
+    // if i remove the section it goes back to normal
+    // also the browser itself is slightly transparent it's just a darker overlay to begin with.. need to fix...
+
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
     <div className="fixed inset-0 justify-center align-middle items-end opacity-50 z-[0]" >
       <Image
@@ -224,11 +229,17 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold mb-6">skills & technologies</h2>
+
+            <h3 className="text-2xl font-semibold mb-4">web development</h3>
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                "JavaScript", "TypeScript", "React", "Next.js", 
-                "Node.js", "HTML/CSS", "Tailwind", "Git",
-                "REST APIs", "GraphQL", "Docker", "AWS"
+                // this was originally autofilled please replace with actual skills and split into sections eg a section for aiml a section for webdev etc
+                // "JavaScript", "TypeScript", "React", "Next.js", 
+                // "Node.js", "HTML/CSS", "Tailwind", "Git",
+                // "REST APIs", "GraphQL", "Docker", "AWS"
+                "JavaScript", "TypeScript", "React", "Next.js",
+                "Node.js", "HTML/CSS", "Tailwind",
               ].map((skill, index) => (
                 <Card key={index} className="bg-gray-800 border-gray-700">
                   <CardBody className="items-center p-4">
@@ -240,6 +251,32 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+
+            {/* is this allowed in professional web development... my pure html/css background is showing.. */}
+            <br /> 
+
+            <h3 className="text-2xl font-semibold mb-4">web development</h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                // this was originally autofilled please replace with actual skills and split into sections eg a section for aiml a section for webdev etc
+                // "JavaScript", "TypeScript", "React", "Next.js", 
+                // "Node.js", "HTML/CSS", "Tailwind", "Git",
+                // "REST APIs", "GraphQL", "Docker", "AWS"
+                "JavaScript", "TypeScript", "React", "Next.js",
+                "Node.js", "HTML/CSS", "Tailwind",
+              ].map((skill, index) => (
+                <Card key={index} className="bg-gray-800 border-gray-700">
+                  <CardBody className="items-center p-4">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🚀</div>
+                      <h3 className="text-lg font-medium">{skill}</h3>
+                    </div>
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
+
           </motion.div>
         )}
         
