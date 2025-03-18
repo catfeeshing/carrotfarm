@@ -46,16 +46,18 @@ export default function Home() {
     // if i remove the section it goes back to normal
     // also the browser itself is slightly transparent it's just a darker overlay to begin with.. need to fix...
 
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-    <div className="fixed inset-0 justify-center align-middle items-end opacity-50 z-[0]" >
-      <Image
-      alt="NextUI hero Image"
-      src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
-      width={10000}
-      height={10000}
-      className="" 
-      />
-    </div>
+    // <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    
+    // <div className="fixed inset-0 justify-center align-middle items-end opacity-50 z-[0]" >
+    //   <Image
+    //   alt="NextUI hero Image"
+    //   src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+    //   width={10000}
+    //   height={10000}
+    //   className="" 
+    //   />
+    // </div>
+    
 
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       {/* Browser-like navbar */}
@@ -369,6 +371,6 @@ export default function Home() {
         <div>made with next.js & heroUI !</div>
       </div>
     </div>
-    </section>
+    // </section>
   );
 }
