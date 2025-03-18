@@ -59,7 +59,8 @@ export default function Home() {
     // </div>
     
 
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    // <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen">
       {/* Browser-like navbar */}
       <div className="border border-gray-700 rounded-t-lg bg-gray-800 mx-auto max-w-6xl mt-8">
         <div className="flex items-center p-2 border-b border-gray-700">
