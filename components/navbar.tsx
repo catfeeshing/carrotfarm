@@ -1,3 +1,7 @@
+"use client";
+
+import {Popover, PopoverTrigger, PopoverContent, Button as PopoverButton} from "@heroui/react";
+
 import {
       Navbar as HeroUINavbar,
       NavbarContent,
@@ -47,6 +51,10 @@ import {
           type="search"
         />
       );
+
+      function copyDiscord() {
+        navigator.clipboard.writeText(siteConfig.links.discord);
+      }
     
       return (
         <HeroUINavbar maxWidth="xl" position="sticky">
@@ -75,7 +83,7 @@ import {
                 </NavbarItem>
               ))}
             </ul> */}
-            
+
           </NavbarContent>
     
           <NavbarContent
@@ -86,9 +94,22 @@ import {
               {/* <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
                 <TwitterIcon className="text-default-500" />
               </Link> */}
-              <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
+              <Popover placement="bottom" showArrow={true}>
+                <PopoverTrigger onClick={copyDiscord}>
+                    {/* <PopoverButton> */}
+                        <DiscordIcon className="text-default-500" />
+                    {/* </PopoverButton> */}
+                </PopoverTrigger>
+                <PopoverContent>
+                <div>
+                    {/* <div className="text-small font-bold text-center">Discord username copied!</div> */}
+                    <div className="text-tiny text-center">copied "@ahyjie" to clipboard!</div>
+                </div>
+                </PopoverContent>
+              </Popover>
+              {/* <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
                 <DiscordIcon className="text-default-500" />
-              </Link>
+              </Link> */}
               <Link isExternal aria-label="Github" href={siteConfig.links.github}>
                 <GithubIcon className="text-default-500" />
               </Link>
