@@ -63,9 +63,11 @@ export default function RootLayout({
       {/* <div className="absolute inset-0 bg-gray-900/80" />  */}
     </div>
 
+    {/* main screen */} 
+
           <div className="relative flex flex-col h-screen">
             <Navbar />
-            <main className="container mx-auto max-w-7xl px-6 flex-grow">
+            <main className="container mx-auto max-w-7xl px-6 flex-grow overflow-hidden">
               {children}
             </main>
             {/* <footer className="w-full flex items-center justify-center py-3"> */}

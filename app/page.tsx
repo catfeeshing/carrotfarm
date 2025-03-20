@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from 'react';
+// import Draggable from 'react-draggable'; 
 // import Image from 'next/image';
 import {Image} from "@heroui/image";
 import { Card, CardBody, CardFooter, Button, Tabs, Tab } from "@heroui/react";
@@ -40,29 +41,16 @@ export default function Home() {
     }
   };
 
-  return (
 
-    // adding a section to contain the content here messes with the "browser" in that the size is no longer constant across tabs if there's like less wide content in one place than another
-    // if i remove the section it goes back to normal
-    // also the browser itself is slightly transparent it's just a darker overlay to begin with.. need to fix...
+  // function to drag window around maybe
 
-    // <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-    
-    // <div className="fixed inset-0 justify-center align-middle items-end opacity-50 z-[0]" >
-    //   <Image
-    //   alt="NextUI hero Image"
-    //   src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
-    //   width={10000}
-    //   height={10000}
-    //   className="" 
-    //   />
-    // </div>
-    
+  return (  
 
     // <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-    <div className="min-h-screen">
+    // <Draggable>
+    <div className="min-h-screen position-absolute">
       {/* Browser-like navbar */}
-      <div className="border border-gray-700 rounded-t-lg bg-gray-800 mx-auto max-w-6xl mt-8">
+      <div className="border border-gray-700 rounded-t-lg bg-gray-800 mx-auto max-w-6xl mt-4">
         <div className="flex items-center p-2 border-b border-gray-700">
           <div className="flex space-x-2 mr-4">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -122,7 +110,7 @@ export default function Home() {
       </div>
       
       {/* Content area */}
-      <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh]">
+      <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
         {activeTab === "about" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -372,6 +360,6 @@ export default function Home() {
         <div>made with next.js & heroUI !</div>
       </div>
     </div>
-    // </section>
+    // </Draggable>
   );
 }
