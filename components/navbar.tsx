@@ -1,6 +1,7 @@
 "use client";
 
 import {Popover, PopoverTrigger, PopoverContent, Button as PopoverButton} from "@heroui/react";
+import { FaLinkedin } from "react-icons/fa";
 
 import {
       Navbar as HeroUINavbar,
@@ -28,6 +29,7 @@ import {
       HeartFilledIcon,
       SearchIcon,
       Logo,
+      LinkedInIcon
     } from "@/components/icons";
     
     export const Navbar = () => {
@@ -94,6 +96,12 @@ import {
               {/* <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
                 <TwitterIcon className="text-default-500" />
               </Link> */}
+
+                <Link isExternal aria-label="LinkedIn" href={siteConfig.links.linkedin}>
+                    {/* <LinkedInIcon className="text-default-500" /> */}
+                    <FaLinkedin className="text-default-500 size-5" />
+                </Link>
+
               <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger onClick={copyDiscord}>
                     {/* <PopoverButton> */}

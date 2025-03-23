@@ -65,5 +65,6 @@ export const siteConfig = {
     docs: "https://heroui.com",
     discord: "ahyjie",
     sponsor: "https://patreon.com/jrgarciadev",
+    linkedin: "https://linkedin.com/in/carolyncui",
   },
 };

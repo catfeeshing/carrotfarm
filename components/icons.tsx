@@ -89,6 +89,29 @@ export const GithubIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+export const LinkedInIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => {
+  return (
+    <svg
+      height={size || height}
+      viewBox="0 0 24 24"
+      width={size || width}
+      {...props}
+    >
+      <path
+        clipRule="evenodd"
+        d="M3 3h18v18H3V3zm5.25 17H5.75V9.75h2.5V20zm-1.25-12a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm1.25 5.5H5.75V8.25h2.5V13z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+}
+
 export const MoonFilledIcon = ({
   size = 24,
   width,
