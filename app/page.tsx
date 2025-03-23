@@ -2,14 +2,22 @@
 "use client";
 
 import { useState } from 'react';
-// import Draggable from 'react-draggable'; 
+import Draggable from 'react-draggable'; 
 // import Image from 'next/image';
-import {Image} from "@heroui/image";
+// import {Image} from "@heroui/image";
 import { Card, CardBody, CardFooter, Button, Tabs, Tab } from "@heroui/react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
 import { FiMonitor, FiFolder, FiMail, FiUser } from 'react-icons/fi';
+
+// Subpages
+import { About }  from '@/components/about';
+import { Skills } from '@/components/skills';
+import { Projects } from '@/components/projects';
+import { Terminal } from '@/components/terminal';
+import { Contact } from '@/components/contact';
+
 
 export default function Home() {
 
@@ -109,253 +117,30 @@ export default function Home() {
         </Tabs>
       </div>
       
-      {/* Content area */}
+      {/* Subpages */}
       <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
         {activeTab === "about" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-4xl font-bold mb-6 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              hi, i'm carolyn !
-            </h1>
-            <p className="text-xl mb-6 text-gray-300">
-              recent cs grad kind of obsessed with ai/ml and with making the world a better place :)
-              <br />
-              currently building things i find cool!
-            </p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-gray-800 border-gray-700">
-                <CardBody>
-                  <h2 className="text-2xl font-semibold mb-4">About Me</h2>
-                  <p className="text-gray-300">
-                    awawaa move this to the right and replace with a picture of me? im gonna draw myself?
-                  </p>
-                </CardBody>
-              </Card>
-              <Card className="bg-gray-800 border-gray-700">
-                <CardBody>
-                  <h2 className="text-2xl font-semibold mb-4">header</h2>
-                  <ul className="list-disc list-inside text-gray-300">
-                    <li>thing</li>
-                    <li>thing</li>
-                  </ul>
-                </CardBody>
-              </Card>
-            </div>
-            <div className="mt-10 flex justify-center space-x-4">
-              <Button 
-                startContent={<FaGithub />}
-                variant="flat"
-                color="default"
-                size="lg"
-                href="https://github.com/yourusername"
-                as="a"
-                target="_blank"
-              >
-                GitHub
-              </Button>
-              <Button
-                startContent={<FaLinkedin />}
-                variant="flat"
-                color="primary"
-                size="lg"
-                href="https://linkedin.com/in/yourusername"
-                as="a"
-                target="_blank"
-              >
-                LinkedIn
-              </Button>
-              {/* <Button
-                startContent={<FaTwitter />}
-                variant="flat"
-                color="secondary"
-                size="lg"
-                href="https://twitter.com/yourusername"
-                as="a"
-                target="_blank"
-              >
-                Twitter
-              </Button> */}
-            </div>
-          </motion.div>
+          <About />
         )}
         
         {activeTab === "projects" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-6">My Projects</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <Card key={index} className="bg-gray-800 border-gray-700">
-                  <CardBody>
-                    <h3 className="text-xl font-semibold mb-2">Project {index + 1}</h3>
-                    <p className="text-gray-300 mb-4">
-                      decriptoin
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="bg-blue-900 text-xs px-2 py-1 rounded">Next.js</span>
-                      <span className="bg-blue-900 text-xs px-2 py-1 rounded">TypeScript</span>
-                      <span className="bg-blue-900 text-xs px-2 py-1 rounded">React</span>
-                    </div>
-                  </CardBody>
-                  <CardFooter className="justify-between">
-                    <Button size="sm" variant="flat" color="primary">website/demo</Button>
-                    <Button size="sm" variant="flat">code</Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
+          <Projects />
         )}
         
         {activeTab === "skills" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-6">skills & technologies</h2>
-
-            <h3 className="text-2xl font-semibold mb-4">web development</h3>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                // this was originally autofilled please replace with actual skills and split into sections eg a section for aiml a section for webdev etc
-                // "JavaScript", "TypeScript", "React", "Next.js", 
-                // "Node.js", "HTML/CSS", "Tailwind", "Git",
-                // "REST APIs", "GraphQL", "Docker", "AWS"
-                "JavaScript", "TypeScript", "React", "Next.js",
-                "Node.js", "HTML/CSS", "Tailwind",
-              ].map((skill, index) => (
-                <Card key={index} className="bg-gray-800 border-gray-700">
-                  <CardBody className="items-center p-4">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">🚀</div>
-                      <h3 className="text-lg font-medium">{skill}</h3>
-                    </div>
-                  </CardBody>
-                </Card>
-              ))}
-            </div>
-
-            {/* is this allowed in professional web development... my pure html/css background is showing.. */}
-            <br /> 
-
-            <h3 className="text-2xl font-semibold mb-4">web development</h3>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                // this was originally autofilled please replace with actual skills and split into sections eg a section for aiml a section for webdev etc
-                // "JavaScript", "TypeScript", "React", "Next.js", 
-                // "Node.js", "HTML/CSS", "Tailwind", "Git",
-                // "REST APIs", "GraphQL", "Docker", "AWS"
-                "JavaScript", "TypeScript", "React", "Next.js",
-                "Node.js", "HTML/CSS", "Tailwind",
-              ].map((skill, index) => (
-                <Card key={index} className="bg-gray-800 border-gray-700">
-                  <CardBody className="items-center p-4">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">🚀</div>
-                      <h3 className="text-lg font-medium">{skill}</h3>
-                    </div>
-                  </CardBody>
-                </Card>
-              ))}
-            </div>
-
-          </motion.div>
+          <Skills />
         )}
         
         {activeTab === "terminal" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="font-mono"
-          >
-            <div className="bg-black p-4 rounded-lg">
-              <p className="text-green-500">$ whoami</p>
-              <p className="text-white mb-2">[cawowyn] - wannabe dev</p>
-              
-              <p className="text-green-500">$ ls -la skills/</p>
-              <p className="text-white mb-2">
-                drwxr-xr-x tools git docker
-              </p>
-
-              <p className="text-green-500">$ ls -la webdev/skills/</p>
-              <p className="text-white mb-2">
-                drwxr-xr-x frontend react next.js typescript<br />
-                drwxr-xr-x backend flask firebase<br />
-              </p>
-              
-              {/* please remember to change this later */}
-              <p className="text-green-500">$ cat about.txt</p>
-              <p className="text-white mb-2">
-                // i like puter since the elementary<br />
-                // got into computer science because of club penguin, poptropica, and minecraft<br />
-                // i am currently addicted to ai/ml
-              </p>
-              
-              <p className="text-green-500">$ contact --send-message</p>
-              <p className="text-white mb-4">Initiating contact form...</p>
-              
-              <div className="flex items-center">
-                <span className="text-green-500">$&nbsp;</span>
-                <div className="relative">
-                  <span className="animate-pulse">▌</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <Terminal />
         )}
         
         {activeTab === "contact" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-6">get in touch!</h2>
-            <Card className="bg-gray-800 border-gray-700 max-w-xl mx-auto">
-              <CardBody className="p-6">
-                <form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white" 
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Email</label>
-                    <input 
-                      type="email" 
-                      className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white" 
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Message</label>
-                    <textarea 
-                      className="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white h-32" 
-                      placeholder="Your message here..."
-                    />
-                  </div>
-                  <Button color="primary" className="w-full">Send Message</Button>
-                </form>
-              </CardBody>
-            </Card>
-          </motion.div>
+          <Contact />
         )}
       </div>
       
-      {/* Status bar */}
+      {/* Footer (outside window) */}
       <div className="mx-auto max-w-6xl mt-2 mb-8 px-4 text-gray-400 text-sm flex justify-between">
         <div>made with next.js & heroUI !</div>
       </div>
