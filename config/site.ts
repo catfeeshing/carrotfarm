@@ -66,5 +66,7 @@ export const siteConfig = {
     discord: "ahyjie",
     sponsor: "https://patreon.com/jrgarciadev",
     linkedin: "https://linkedin.com/in/carolyncui",
+    emailPersonal: "carolyn.cui@gmail.com",
+    emailSchool: "ccui3@ucmerced.edu",
   },
 };

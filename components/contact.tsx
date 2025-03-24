@@ -2,13 +2,22 @@ import { useState } from 'react';
 // import Draggable from 'react-draggable'; 
 // import Image from 'next/image';
 // import {Image} from "@heroui/image";
-import { Card, CardBody, CardFooter, Button, Tabs, Tab } from "@heroui/react";
+import { Card, CardBody, CardFooter, Button, Tabs, Tab, Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
-import { FiMonitor, FiFolder, FiMail, FiUser } from 'react-icons/fi';
+import { FiMonitor, FiFolder, FiMail, FiUser, FiCopy } from 'react-icons/fi';
+import { siteConfig } from '@/config/site';
 
 export const Contact = () => {
+
+    function copyPersonalEmail() {
+        navigator.clipboard.writeText(siteConfig.links.emailPersonal);
+    }
+
+    function copySchoolEmail() {
+        navigator.clipboard.writeText(siteConfig.links.emailSchool);
+    }
 
     return (
 
@@ -21,15 +30,80 @@ export const Contact = () => {
             {/* swap for google form / try the endpoint thing (inspect to get field names and submit endpoint) */}
             
 
-            <h2 className="text-3xl font-bold mb-3 text-center">get in touch!</h2>
+            <h2 className="text-3xl font-bold mb-7 text-center">get in touch!</h2>
 
-            <p className="text-l mb-6 text-gray-300 text-center">
+            <p className="text-l mb-7 text-gray-300 text-center">
+                feel free to reach out for any reason!
+                <br></br>
+                always open to questions and collaboration.
+            </p>
+
+            {/* <p className="text-l mb-6 text-gray-300 text-center">
               feel free to reach out for any reason!
               <br></br>
               always open to questions and collaboration B)
-            </p>
+              <br></br> <br></br>
+              you can find me at:
+            </p> */}
 
-            <Card className="bg-gray-800 border-gray-700 max-w-xl mx-auto">
+            <Card className="bg-gray-800 border-gray-700 max-w-80 mx-auto">
+                <CardBody className="p-6 text-center font-semibold">
+
+                    {/* fix placement of copy */}
+                
+                <p>
+                <a href='mailto:carolyn.cui@gmail.com'>carolyn.cui@gmail.com &nbsp;</a> <Popover placement = "right" showArrow = {true}>
+                        <PopoverTrigger onClick={copyPersonalEmail}>
+                            <FiCopy style={{ display: "inline" }} className = "text-default-500"/>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            Email copied to clipboard!
+                        </PopoverContent>
+                    </Popover> 
+                </p>
+                <br></br>
+                <p>
+                <a href='mailto:ccui3@ucmerced.edu'>ccui3@ucmerced.edu &nbsp;</a> <Popover placement = "right" showArrow = {true}>
+                        <PopoverTrigger onClick={copySchoolEmail}>
+                            <FiCopy style={{ display: "inline" }} className = "text-default-500"/>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            Email copied to clipboard!
+                        </PopoverContent>
+                    </Popover> 
+                </p>
+                
+
+                </CardBody>
+            </Card>
+
+            
+            <div className="mt-10 flex justify-center space-x-4">
+                      <Button 
+                        startContent={<FaGithub />}
+                        variant="flat"
+                        color="default"
+                        size="lg"
+                        href="https://github.com/catfeeshing"
+                        as="a"
+                        target="_blank"
+                      >
+                        GitHub
+                      </Button>
+                      <Button
+                        startContent={<FaLinkedin />}
+                        variant="flat"
+                        color="primary"
+                        size="lg"
+                        href="https://linkedin.com/in/carolyncui"
+                        as="a"
+                        target="_blank"
+                      >
+                        LinkedIn
+                      </Button>
+                </div>
+
+            {/* <Card className="bg-gray-800 border-gray-700 max-w-xl mx-auto">
               <CardBody className="p-6">
                 <form className="space-y-4">
                   <div>
@@ -58,7 +132,9 @@ export const Contact = () => {
                   <Button color="primary" className="w-full">Send Message</Button>
                 </form>
               </CardBody>
-            </Card>
+            </Card> */}
+
+
           </motion.div>
 
     )
