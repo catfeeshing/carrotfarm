@@ -8,6 +8,7 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
 import { FiMonitor, FiFolder, FiMail, FiUser, FiCopy } from 'react-icons/fi';
 import { siteConfig } from '@/config/site';
+import { Link } from "@heroui/link";
 
 export const Contact = () => {
 
@@ -25,10 +26,10 @@ export const Contact = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-          >
+        >
 
             {/* swap for google form / try the endpoint thing (inspect to get field names and submit endpoint) */}
-            
+
 
             <h2 className="text-3xl font-bold mb-7 text-center">get in touch!</h2>
 
@@ -47,61 +48,70 @@ export const Contact = () => {
             </p> */}
 
             <Card className="bg-gray-800 border-gray-700 max-w-80 mx-auto">
-                <CardBody className="p-6 text-center font-semibold">
+                <CardBody className="p-6 text-center font-semibold text-cyan-300">
 
-                    {/* fix placement of copy */}
-                
-                <p>
-                <a href='mailto:carolyn.cui@gmail.com'>carolyn.cui@gmail.com &nbsp;</a> <Popover placement = "right" showArrow = {true}>
-                        <PopoverTrigger onClick={copyPersonalEmail}>
-                            <FiCopy style={{ display: "inline" }} className = "text-default-500"/>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            Email copied to clipboard!
-                        </PopoverContent>
-                    </Popover> 
-                </p>
-                <br></br>
-                <p>
-                <a href='mailto:ccui3@ucmerced.edu'>ccui3@ucmerced.edu &nbsp;</a> <Popover placement = "right" showArrow = {true}>
-                        <PopoverTrigger onClick={copySchoolEmail}>
-                            <FiCopy style={{ display: "inline" }} className = "text-default-500"/>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            Email copied to clipboard!
-                        </PopoverContent>
-                    </Popover> 
-                </p>
-                
+                    {/* personal email */}
+
+                    <p>
+                        <Link className="text-cyan-300" href='mailto:carolyn.cui@gmail.com'>carolyn.cui@gmail.com &nbsp;</Link>
+
+                        <Link ><Popover placement="right" showArrow={true}>
+                            <PopoverTrigger onClick={copyPersonalEmail}>
+                                <a><FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" /></a>
+                            </PopoverTrigger> 
+                            <PopoverContent>
+                                Email copied to clipboard!
+                            </PopoverContent>
+                        </Popover>
+                        </Link>
+                    </p>
+                    <br></br>
+
+                    {/* School email */}
+
+                    <p>
+                        <Link className="text-cyan-300" href='mailto:ccui3@ucmerced.edu'>ccui3@ucmerced.edu &nbsp;</Link>
+
+                        <Link ><Popover placement="right" showArrow={true}>
+                            <PopoverTrigger onClick={copyPersonalEmail}>
+                                <a><FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" /></a>
+                            </PopoverTrigger> 
+                            <PopoverContent>
+                                Email copied to clipboard!
+                            </PopoverContent>
+                        </Popover>
+                        </Link>
+                    </p>
+
 
                 </CardBody>
             </Card>
 
-            
+
             <div className="mt-10 flex justify-center space-x-4">
-                      <Button 
-                        startContent={<FaGithub />}
-                        variant="flat"
-                        color="default"
-                        size="lg"
-                        href="https://github.com/catfeeshing"
-                        as="a"
-                        target="_blank"
-                      >
-                        GitHub
-                      </Button>
-                      <Button
-                        startContent={<FaLinkedin />}
-                        variant="flat"
-                        color="primary"
-                        size="lg"
-                        href="https://linkedin.com/in/carolyncui"
-                        as="a"
-                        target="_blank"
-                      >
-                        LinkedIn
-                      </Button>
-                </div>
+                <Button
+                    startContent={<FaGithub />}
+                    variant="flat"
+                    color="default"
+                    size="lg"
+                    href="https://github.com/catfeeshing"
+                    as="a"
+                    target="_blank"
+                >
+                    GitHub
+                </Button>
+                <Button
+                    startContent={<FaLinkedin />}
+                    variant="flat"
+                    color="primary"
+                    size="lg"
+                    href="https://linkedin.com/in/carolyncui"
+                    as="a"
+                    target="_blank"
+                >
+                    LinkedIn
+                </Button>
+            </div>
 
             {/* <Card className="bg-gray-800 border-gray-700 max-w-xl mx-auto">
               <CardBody className="p-6">
@@ -135,7 +145,7 @@ export const Contact = () => {
             </Card> */}
 
 
-          </motion.div>
+        </motion.div>
 
     )
 }
