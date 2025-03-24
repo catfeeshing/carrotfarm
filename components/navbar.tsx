@@ -101,20 +101,23 @@ import {
                     {/* <LinkedInIcon className="text-default-500" /> */}
                     <FaLinkedin className="text-default-500 size-5" />
                 </Link>
-
+                
+                <Link isExternal aria-label="Discord">
               <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger onClick={copyDiscord}>
                     {/* <PopoverButton> */}
-                        <DiscordIcon className="text-default-500" />
+                        <DiscordIcon className="text-default-500 cursor-pointer" />
                     {/* </PopoverButton> */}
                 </PopoverTrigger>
                 <PopoverContent>
+                    
                 <div>
                     {/* <div className="text-small font-bold text-center">Discord username copied!</div> */}
-                    <div className="text-tiny text-center">copied "@ahyjie" to clipboard!</div>
+                    <div className="text-tiny text-center">Copied "@ahyjie" to clipboard!</div>
                 </div>
                 </PopoverContent>
               </Popover>
+              </Link>
               {/* <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
                 <DiscordIcon className="text-default-500" />
               </Link> */}
