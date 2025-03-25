@@ -53,11 +53,11 @@ export const Contact = () => {
                     {/* personal email */}
 
                     <p>
-                        <Link className="text-cyan-300" href='mailto:carolyn.cui@gmail.com'>carolyn.cui@gmail.com &nbsp;</Link>
+                        <Link className="text-indigo-300" href='mailto:carolyn.cui@gmail.com'>carolyn.cui@gmail.com &nbsp;</Link>
 
                         <Link ><Popover placement="right" showArrow={true}>
                             <PopoverTrigger onClick={copyPersonalEmail}>
-                                <a><FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" /></a>
+                                <FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" />
                             </PopoverTrigger> 
                             <PopoverContent>
                                 Email copied to clipboard!
@@ -70,11 +70,11 @@ export const Contact = () => {
                     {/* School email */}
 
                     <p>
-                        <Link className="text-cyan-300" href='mailto:ccui3@ucmerced.edu'>ccui3@ucmerced.edu &nbsp;</Link>
+                        <Link className="text-indigo-300" href='mailto:ccui3@ucmerced.edu'>ccui3@ucmerced.edu &nbsp;</Link>
 
                         <Link ><Popover placement="right" showArrow={true}>
                             <PopoverTrigger onClick={copyPersonalEmail}>
-                                <a><FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" /></a>
+                                <FiCopy style={{ display: "inline" }} className="text-default-500 cursor-pointer" />
                             </PopoverTrigger> 
                             <PopoverContent>
                                 Email copied to clipboard!
