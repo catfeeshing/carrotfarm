@@ -12,18 +12,20 @@ import { RiTerminalBoxFill } from 'react-icons/ri';
 import { FiMonitor, FiFolder, FiMail, FiUser } from 'react-icons/fi';
 
 // Subpages
-import { About } from '@/components/about';
-import { Skills } from '@/components/skills';
-import { Projects } from '@/components/projects';
-import { Terminal } from '@/components/terminal';
-import { Contact } from '@/components/contact';
+import { BrowserHome } from '@/components/pages/home';
+import { About } from '@/components/pages/about';
+import { Skills } from '@/components/pages/skills';
+import { Projects } from '@/components/pages/projects';
+import { Terminal } from '@/components/pages/terminal';
+import { Contact } from '@/components/pages/contact';
 
 
 export default function Home() {
 
-  const [activeTab, setActiveTab] = useState("about");
+  const [activeTab, setActiveTab] = useState("");
 
   const pages = {
+    home: <Home />,
     about: <About />,
     projects: <Projects />,
     skills: <Skills />,
@@ -32,7 +34,7 @@ export default function Home() {
   };
 
   // Simulated browser navigation state
-  const [browserHistory, setBrowserHistory] = useState<string[]>(["about"]);
+  const [browserHistory, setBrowserHistory] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
   const navigateTo = (tab: string) => {
@@ -99,7 +101,7 @@ export default function Home() {
               isIconOnly
               size="sm"
               variant="flat"
-              onClick={() => navigateTo("about")}
+              onClick={() => navigateTo(activeTab)}
             >
               ↻
             </Button>
@@ -107,7 +109,7 @@ export default function Home() {
               isIconOnly
               size="sm"
               variant="flat"
-              onClick={() => navigateTo("about")}
+              onClick={() => navigateTo("")}
             >
               <FaHome />
             </Button>
@@ -116,7 +118,7 @@ export default function Home() {
           <div className="flex-1 rounded-md p-1 text-sm text-center">
             <Input
               // change color of background later to get rid of secondary color border
-              classNames= {{
+              classNames={{
                 inputWrapper: [
                   "bg-default-200/50",
                   "dark:bg-default/60",
@@ -131,9 +133,16 @@ export default function Home() {
               }}
               isClearable
               placeholder={`https://carrotfarm.com/${activeTab}`}
+              // type="url"
+              // this is not what im looking for nvm
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   const inputValue = (e.target as HTMLInputElement).value;
+
+                  // enter with no input or invalid url -- just a very simple check and can be bypassed but unless someone is actively trying to catch bugs it should be okay for now
+                  if (inputValue === "" || !inputValue.includes(".")) {
+                    return;
+                  }
                   // maybe handle w switch in future idk
                   // messy
 
@@ -142,36 +151,36 @@ export default function Home() {
                   // will ensure the url bar is always accurate bc the placeholder updates automatically
                   // (e.target as HTMLInputElement).value = '';
                   
-                  if (inputValue.startsWith("https://carrotfarm.com/")) {
+                  if (inputValue.startsWith("https://carrotfarm.com")) {
                     const tab = inputValue.replace("https://carrotfarm.com/", "");
                     if (!(tab in pages)) {
-                      // temporary: in future navigate to 404 page
-                      const tab = "about";
+                      // temporary: in future navigate to 404 page if i want to be extra
+                      const tab = "";
                       navigateTo(tab);
                     }
                     else {
                       navigateTo(tab);
                     }
                   }
-                  else if (inputValue.startsWith("carrotfarm.com/")) {
+                  else if (inputValue.startsWith("carrotfarm.com")) {
                     const tab = inputValue.replace("carrotfarm.com/", "");
                     if (!(tab in pages)) {
-                      // temporary: in future navigate to 404 page
-                      const tab = "about";
+                      // temporary: in future navigate to 404 page if i want to be extra
+                      const tab = "";
                       navigateTo(tab);
                     }
                     else {
                       navigateTo(tab);
-                  }
+                    }
 
-                  // everything else
+                    // everything else
                   } else {
                     window.open(inputValue, "_blank");
                   }
                 }
               }}
             />
-            
+
             {/* old url bar */}
 
             {/* <div className="flex-1 bg-gray-700 rounded-md p-1 text-sm text-center">
@@ -187,16 +196,25 @@ export default function Home() {
           variant="underlined"
           color="primary"
         >
+          <Tab
+            key=""
+            title={<div className="flex items-center gap-2"><FaHome />Home</div>} />
+
           <Tab key="about" title={<div className="flex items-center gap-2"><FiUser />About</div>} />
           <Tab key="projects" title={<div className="flex items-center gap-2"><FiFolder />Projects</div>} />
           <Tab key="skills" title={<div className="flex items-center gap-2"><FiMonitor />Skills</div>} />
-          <Tab key="terminal" title={<div className="flex items-center gap-2"><RiTerminalBoxFill />Terminal</div>} />
+          {/* flex: i stole from aaron and thought i might want to include something like a terminal but maybe not anymore. pondering. */}
+          {/* <Tab key="terminal" title={<div className="flex items-center gap-2"><RiTerminalBoxFill />Terminal</div>} /> */}
           <Tab key="contact" title={<div className="flex items-center gap-2"><FiMail />Contact</div>} />
         </Tabs>
       </div>
 
       {/* Subpages */}
       <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
+        {activeTab === "" && (
+          <BrowserHome />
+        )}
+
         {activeTab === "about" && (
           <About />
         )}
