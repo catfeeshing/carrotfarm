@@ -66,8 +66,8 @@ import {
                 {/* <Logo /> */}
                 {/* <p className="font-bold text-inherit">ACME</p> */}
                 {/* home icon */}
-                {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full" />
-                <FaHome className="text-default-500 size-5" /> */}
+                {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full" /> */}
+                <FaHome className="text-default-300 size-5" />
               </NextLink>
             </NavbarBrand>
 
