@@ -1,7 +1,7 @@
 "use client";
 
 import {Popover, PopoverTrigger, PopoverContent, Button as PopoverButton} from "@heroui/react";
-import { FaLinkedin } from "react-icons/fa";
+import { FaHome, FaLinkedin } from "react-icons/fa";
 
 import {
       Navbar as HeroUINavbar,
@@ -65,6 +65,9 @@ import {
               <NextLink className="flex justify-start items-center gap-1" href="/">
                 {/* <Logo /> */}
                 {/* <p className="font-bold text-inherit">ACME</p> */}
+                {/* home icon */}
+                {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full" />
+                <FaHome className="text-default-500 size-5" /> */}
               </NextLink>
             </NavbarBrand>
 
