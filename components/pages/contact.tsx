@@ -103,7 +103,7 @@ export const Contact = () => {
                 <Button
                     startContent={<FaLinkedin />}
                     variant="flat"
-                    color="primary"
+                    // color="primary"
                     size="lg"
                     href="https://linkedin.com/in/carolyncui"
                     as="a"

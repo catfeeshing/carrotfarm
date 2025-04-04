@@ -59,7 +59,7 @@ import {
       }
     
       return (
-        <HeroUINavbar maxWidth="xl" position="sticky">
+        <HeroUINavbar maxWidth="xl" position="sticky" className="opacity-50">
           <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
             <NavbarBrand as="li" className="gap-3 max-w-fit">
               <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -67,7 +67,7 @@ import {
                 {/* <p className="font-bold text-inherit">ACME</p> */}
                 {/* home icon */}
                 {/* <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full" /> */}
-                <FaHome className="text-default-300 size-5" />
+                <FaHome className="text-default-700 size-5" />
               </NextLink>
             </NavbarBrand>
 
