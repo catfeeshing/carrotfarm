@@ -9,7 +9,7 @@ import { Card, CardBody, CardFooter, Button, Tabs, Tab, Input } from "@heroui/re
 import { motion } from "framer-motion";
 import { FaGithub, FaHome, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
-import { FiMonitor, FiFolder, FiMail, FiUser } from 'react-icons/fi';
+import { FiMonitor, FiFolder, FiMail, FiUser, FiTerminal } from 'react-icons/fi';
 
 // Subpages
 import { BrowserHome } from '@/components/pages/home';
@@ -18,6 +18,7 @@ import { Skills } from '@/components/pages/skills';
 import { Projects } from '@/components/pages/projects';
 import { Terminal } from '@/components/pages/terminal';
 import { Contact } from '@/components/pages/contact';
+import ImageColorPicker from '@/components/pages/colorpicker';
 
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
     skills: <Skills />,
     terminal: <Terminal />,
     contact: <Contact />,
+    color: <ImageColorPicker />
   };
 
   // Simulated browser navigation state
@@ -150,7 +152,7 @@ export default function Home() {
                   // it is not working. yet
                   // will ensure the url bar is always accurate bc the placeholder updates automatically
                   // (e.target as HTMLInputElement).value = '';
-                  
+
                   if (inputValue.startsWith("https://carrotfarm.com")) {
                     const tab = inputValue.replace("https://carrotfarm.com/", "");
                     if (!(tab in pages)) {
@@ -200,19 +202,73 @@ export default function Home() {
             key=""
             title={<div className="flex items-center gap-2"><FaHome />Home</div>} />
 
-          <Tab key="about" title={<div className="flex items-center gap-2"><FiUser />About</div>} />
+          <Tab
+            key="about"
+            title={
+              <div className="flex items-center gap-2">
+                <FiUser /> About
+              </div>}
+          />
+
           <Tab key="projects" title={<div className="flex items-center gap-2"><FiFolder />Projects</div>} />
           <Tab key="skills" title={<div className="flex items-center gap-2"><FiMonitor />Skills</div>} />
           {/* flex: i stole from aaron and thought i might want to include something like a terminal but maybe not anymore. pondering. */}
           {/* <Tab key="terminal" title={<div className="flex items-center gap-2"><RiTerminalBoxFill />Terminal</div>} /> */}
           <Tab key="contact" title={<div className="flex items-center gap-2"><FiMail />Contact</div>} />
+          <Tab key="color" title={<div className="flex items-center gap-2"><FiMail />Color Picker</div>} />
         </Tabs>
       </div>
 
       {/* Subpages */}
       <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
         {activeTab === "" && (
+          <>
+
           <BrowserHome />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+
+              <div className="mt-10 flex justify-center space-x-4">
+                <Button
+                  startContent={<FiTerminal />}
+                  variant="flat"
+                  color="default"
+                  size="lg"
+                  as="a"
+                  // on press navigate to projects page
+                  // href="#projects"
+                  onClick = {() => navigateTo("projects")}
+                  
+                >
+                  View Projects
+                </Button>
+
+              </div>
+
+              <div className='mt-4 flex justify-center space-x-4'>
+
+              <Button
+                  startContent={<FiMail />}
+                  variant="flat"
+                  color="secondary"
+                  size="lg"
+                  href="https://linkedin.com/in/carolyncui"
+                  as="a"
+                  target="_blank"
+                >
+                  Contact
+                </Button>
+
+              </div>
+
+            </motion.div>
+
+          </>
+
         )}
 
         {activeTab === "about" && (
@@ -220,7 +276,9 @@ export default function Home() {
         )}
 
         {activeTab === "projects" && (
-          <Projects />
+          // <div id = "projects">
+            <Projects />
+          // </div>
         )}
 
         {activeTab === "skills" && (
@@ -233,6 +291,10 @@ export default function Home() {
 
         {activeTab === "contact" && (
           <Contact />
+        )}
+
+        {activeTab === "color" && (
+          <ImageColorPicker />
         )}
       </div>
 
