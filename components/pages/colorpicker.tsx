@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 
-// Personal tool for Minecraft skins (to be moved elsewhere later but I need to track changes for now)
-
 export default function ImageColorPicker() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [clientPosition, setClientPosition] = useState({ x: 0, y: 0 });
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [copyMessage, setCopyMessage] = useState('');
@@ -103,27 +102,38 @@ export default function ImageColorPicker() {
   };
 
   // Update mouse position and color when hovering over the image
-  const handleMouseMove = (e: { clientX: number; clientY: number; }) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return;
     
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
-    const x = Math.floor(e.clientX - rect.left);
-    const y = Math.floor(e.clientY - rect.top);
     
-    setPosition({ x, y });
+    // Store client position for the cursor indicator
+    const clientX = e.clientX - rect.left;
+    const clientY = e.clientY - rect.top;
+    setClientPosition({ x: clientX, y: clientY });
+    
+    // Calculate position in canvas coordinates accounting for scroll
+    const x = Math.floor(clientX * (canvas.width / rect.width));
+    const y = Math.floor(clientY * (canvas.height / rect.height));
+    
+    // Make sure coordinates are within bounds
+    const boundedX = Math.max(0, Math.min(x, canvas.width - 1));
+    const boundedY = Math.max(0, Math.min(y, canvas.height - 1));
+    
+    setPosition({ x: boundedX, y: boundedY });
     
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    const pixelData = ctx.getImageData(x, y, 1, 1).data;
+    const pixelData = ctx.getImageData(boundedX, boundedY, 1, 1).data;
     // Remove the # from hexColor
     const hexColor = `${pixelData[0].toString(16).padStart(2, '0')}${pixelData[1].toString(16).padStart(2, '0')}${pixelData[2].toString(16).padStart(2, '0')}`;
     setHoveredColor(hexColor);  
     
-    updateZoomCanvas(x, y);
+    updateZoomCanvas(boundedX, boundedY);
   };
 
-  // Update zoom canvas with magnified view
+  // Update zoom canvas with magnified view and pixel grid
   const updateZoomCanvas = (x: number, y: number) => {
     if (!canvasRef.current || !zoomCanvasRef.current) return;
     
@@ -137,54 +147,53 @@ export default function ImageColorPicker() {
       zoomCtx.clearRect(0, 0, zoomCanvas.width, zoomCanvas.height);
     }
     
-    // Size of area to magnify
-    const size = 10;
+    // Size of area to magnify - use odd number to have a center pixel
+    const size = 9;
     
     // Get image data for the area around the cursor
-    const sourceX = Math.max(0, Math.min(x - size/2, sourceCanvas.width - size));
-    const sourceY = Math.max(0, Math.min(y - size/2, sourceCanvas.height - size));
+    const sourceX = Math.max(0, Math.min(x - Math.floor(size/2), sourceCanvas.width - size));
+    const sourceY = Math.max(0, Math.min(y - Math.floor(size/2), sourceCanvas.height - size));
     
     if (!sourceCtx) return;
     const imageData = sourceCtx.getImageData(sourceX, sourceY, size, size);
     
-    // Create a temporary canvas to scale the image data
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = size;
-    tempCanvas.height = size;
-    const tempCtx = tempCanvas.getContext('2d');
-    if (tempCtx) {
-      tempCtx.putImageData(imageData, 0, 0);
-    }
+    // Calculate pixel size in the zoom canvas
+    const pixelSize = Math.floor(zoomCanvas.width / size);
     
-    // Draw the scaled image to the zoom canvas
+    // Draw each pixel with a border to create the grid
     if (zoomCtx) {
-      zoomCtx.drawImage(
-        tempCanvas, 
-        0, 0, size, size,
-        0, 0, zoomCanvas.width, zoomCanvas.height
-      );
+      for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+          const index = (j * size + i) * 4;
+          const r = imageData.data[index];
+          const g = imageData.data[index + 1];
+          const b = imageData.data[index + 2];
+          
+          zoomCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+          zoomCtx.fillRect(i * pixelSize, j * pixelSize, pixelSize, pixelSize);
+          
+          // Draw grid lines
+          zoomCtx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+          zoomCtx.lineWidth = 0.5;
+          zoomCtx.strokeRect(i * pixelSize, j * pixelSize, pixelSize, pixelSize);
+        }
+      }
     }
     
     // Draw crosshair
     if (!zoomCtx) return;
+    
+    // Highlight the center pixel with a brighter border
+    const centerPixelX = Math.floor(size / 2) * pixelSize;
+    const centerPixelY = Math.floor(size / 2) * pixelSize;
+    
     zoomCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-    zoomCtx.lineWidth = 1;
-    
-    // Horizontal line
-    zoomCtx.beginPath();
-    zoomCtx.moveTo(0, zoomCanvas.height / 2);
-    zoomCtx.lineTo(zoomCanvas.width, zoomCanvas.height / 2);
-    zoomCtx.stroke();
-    
-    // Vertical line
-    zoomCtx.beginPath();
-    zoomCtx.moveTo(zoomCanvas.width / 2, 0);
-    zoomCtx.lineTo(zoomCanvas.width / 2, zoomCanvas.height);
-    zoomCtx.stroke();
+    zoomCtx.lineWidth = 2;
+    zoomCtx.strokeRect(centerPixelX, centerPixelY, pixelSize, pixelSize);
   };
 
   // Handle click to select and copy color
-  const handleClick = (_e: any) => {
+  const handleClick = () => {
     if (!canvasRef.current || !hoveredColor) return;
     
     setSelectedColor(hoveredColor);
@@ -226,9 +235,46 @@ export default function ImageColorPicker() {
     }
   };
 
+  // Calculate magnifier position safely
+  const getMagnifierPosition = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return { left: '0px', top: '0px' };
+    }
+
+    // Get canvas client rect for proper positioning
+    const rect = canvas.getBoundingClientRect();
+    
+    // Default position values
+    let left = '20px';
+    let top = '20px';
+    
+    // Use client position for the magnifier position calculation
+    if (rect.width > 0 && rect.height > 0) {
+      // Horizontal position
+      if (clientPosition.x > rect.width / 2) {
+        left = `${clientPosition.x - 130}px`;
+      } else {
+        left = `${clientPosition.x + 20}px`;
+      }
+      
+      // Vertical position
+      if (clientPosition.y > rect.height / 2) {
+        top = `${clientPosition.y - 130}px`;
+      } else {
+        top = `${clientPosition.y + 20}px`;
+      }
+    }
+    
+    return { left, top };
+  };
+
   // Determine component display modes
   const hasImage = image !== null;
   const hasSelectedColor = selectedColor !== null;
+  
+  // Calculate magnifier position
+  const magnifierPosition = getMagnifierPosition();
 
   return (
     <div 
@@ -282,22 +328,30 @@ export default function ImageColorPicker() {
         </div>
       )}
       
-      {/* Container for canvas and zoom view */}
+      {/* Container for canvas - Remove the border from container and ensure proper padding */}
       <div 
         ref={containerRef} 
-        className={`relative border-2 border-gray-300 rounded-lg overflow-hidden bg-gray-200 flex justify-center items-center ${isFullscreen ? 'h-full' : ''}`}
+        className={`relative bg-gray-200 rounded-lg ${isFullscreen ? 'h-full' : ''}`}
         style={{ 
           minHeight: hasImage ? 'auto' : '240px',
           maxHeight: isFullscreen ? 'calc(100vh - 180px)' : '600px',
+          padding: '2px', // Small padding to prevent border clipping
         }}
       >
         {!hasImage ? (
-          <div className="text-gray-500 text-center p-4">
-            <p>Paste an image here (Ctrl+V)</p>
-            <p className="text-sm mt-2">or use the upload button above</p>
+          <div className="text-gray-500 text-center p-4 border-2 border-gray-300 rounded-lg h-full flex items-center justify-center">
+            <div>
+              <p>Paste an image here (Ctrl+V)</p>
+              <p className="text-sm mt-2">or use the upload button above</p>
+            </div>
           </div>
         ) : (
-          <div className="relative">
+          <div className="relative overflow-auto" style={{ 
+            height: isFullscreen ? 'calc(100vh - 180px)' : '600px',
+            maxWidth: '100%',
+            border: '2px solid #d1d5db', // gray-300 border
+            borderRadius: '0.5rem', // rounded-lg
+          }}>
             <canvas
               ref={canvasRef}
               onMouseMove={handleMouseMove}
@@ -305,13 +359,13 @@ export default function ImageColorPicker() {
               className="cursor-default"
             />
             
-            {/* Custom cursor indicator */}
+            {/* Custom cursor indicator - position based on client coordinates */}
             {hoveredColor && (
               <div 
                 className="absolute pointer-events-none"
                 style={{
-                  left: position.x,
-                  top: position.y,
+                  left: clientPosition.x,
+                  top: clientPosition.y,
                   width: '15px',
                   height: '15px',
                   border: '1px solid white',
@@ -323,15 +377,15 @@ export default function ImageColorPicker() {
               />
             )}
             
-            {/* Magnifier lens */}
+            {/* Magnifier lens with pixel grid */}
             {hoveredColor && (
               <div 
                 className="absolute bg-white border-2 border-gray-400 rounded-lg shadow-lg overflow-hidden"
                 style={{
-                  left: canvasRef.current && position.x > canvasRef.current.width / 2 ? position.x - 110 : position.x + 20,
-                  top: position.y > (canvasRef.current?.height ?? 0) / 2 ? position.y - 110 : position.y + 20,
-                  width: '100px',
-                  height: '120px',
+                  left: magnifierPosition.left,
+                  top: magnifierPosition.top,
+                  width: '120px',
+                  height: '140px',
                   zIndex: 10
                 }}
               >
@@ -339,10 +393,10 @@ export default function ImageColorPicker() {
                   ref={zoomCanvasRef} 
                   width={90} 
                   height={90} 
-                  className="block"
+                  className="block mx-auto mt-2"
                 />
                 <div 
-                  className="text-xs text-center py-1 font-mono"
+                  className="text-xs text-center py-1 font-mono mt-1"
                   style={{ 
                     backgroundColor: `#${hoveredColor}`, 
                     color: isLightColor(hoveredColor) ? '#000' : '#fff' 
