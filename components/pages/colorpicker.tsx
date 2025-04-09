@@ -71,20 +71,41 @@ export default function ImageColorPicker() {
     reader.readAsDataURL(file);
   };
 
-  // Draw image to canvas at original resolution
+  // Draw image to canvas at responsive size
   const drawImageToCanvas = (img: CanvasImageSource) => {
     if (!canvasRef.current || !containerRef.current) return;
     
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    
     const imageElement = img as HTMLImageElement;
     
-    // Use original image dimensions instead of scaling down
-    canvas.width = imageElement.width;
+    // Calculate container max width (account for padding/borders)
+    const containerWidth = containerRef.current.clientWidth - 8; // 4px padding on each side
+    
+    // Set canvas dimensions based on image aspect ratio
+    let canvasWidth, canvasHeight;
+    
+    if (imageElement.width <= containerWidth) {
+      // Image fits within container width - use original dimensions
+      canvasWidth = imageElement.width;
+      canvasHeight = imageElement.height;
+    } else {
+      // Image is wider than container - scale proportionally to fit width
+      canvasWidth = containerWidth;
+      canvasHeight = (imageElement.height / imageElement.width) * containerWidth;
+    }
+    
+    // Set canvas dimensions
+    canvas.width = imageElement.width; // Keep original image dimensions
     canvas.height = imageElement.height;
     
-    // Make container scrollable if needed
+    // Apply CSS styling for responsive display while maintaining aspect ratio
+    canvas.style.width = `${canvasWidth}px`;
+    canvas.style.height = `${canvasHeight}px`;
+    canvas.style.maxWidth = '100%';
+    
+    // Make container height dynamic based on image aspect ratio
+    containerRef.current.style.height = 'auto';
     containerRef.current.style.overflowX = 'auto';
     containerRef.current.style.overflowY = 'auto';
     
@@ -92,6 +113,18 @@ export default function ImageColorPicker() {
       ctx.drawImage(img, 0, 0, imageElement.width, imageElement.height);
     }
   };
+
+  // Handle window resize to adjust canvas dimensions
+  useEffect(() => {
+    const handleResize = () => {
+      if (image) {
+        drawImageToCanvas(image);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [image]);
 
   // Handle file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +146,7 @@ export default function ImageColorPicker() {
     const clientY = e.clientY - rect.top;
     setClientPosition({ x: clientX, y: clientY });
     
-    // Calculate position in canvas coordinates accounting for scroll
+    // Calculate position in canvas coordinates accounting for scaling
     const x = Math.floor(clientX * (canvas.width / rect.width));
     const y = Math.floor(clientY * (canvas.height / rect.height));
     
@@ -279,7 +312,7 @@ export default function ImageColorPicker() {
   return (
     <div 
       ref={fullscreenContainerRef}
-      className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white p-4' : 'w-full max-w-2xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md'}`}
+      className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white p-4' : 'w-full max-w-3xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md'}`}
     >
       {/* Header with title and fullscreen button */}
       <div className="mb-4 flex justify-between items-center">
@@ -328,14 +361,14 @@ export default function ImageColorPicker() {
         </div>
       )}
       
-      {/* Container for canvas - Remove the border from container and ensure proper padding */}
+      {/* Container for canvas - Responsive height based on content */}
       <div 
         ref={containerRef} 
-        className={`relative bg-gray-200 rounded-lg ${isFullscreen ? 'h-full' : ''}`}
+        className={`relative bg-gray-200 rounded-lg overflow-auto ${isFullscreen ? 'flex justify-center' : ''}`}
         style={{ 
           minHeight: hasImage ? 'auto' : '240px',
           maxHeight: isFullscreen ? 'calc(100vh - 180px)' : '600px',
-          padding: '2px', // Small padding to prevent border clipping
+          padding: '4px',
         }}
       >
         {!hasImage ? (
@@ -346,17 +379,22 @@ export default function ImageColorPicker() {
             </div>
           </div>
         ) : (
-          <div className="relative overflow-auto" style={{ 
-            height: isFullscreen ? 'calc(100vh - 180px)' : '600px',
-            maxWidth: '100%',
+          <div className="relative" style={{ 
             border: '2px solid #d1d5db', // gray-300 border
             borderRadius: '0.5rem', // rounded-lg
+            background: '#f9fafb', // gray-50
+            display: 'inline-block', // Important for sizing to content
+            minWidth: 'min-content', // Ensures container respects canvas width
           }}>
             <canvas
               ref={canvasRef}
               onMouseMove={handleMouseMove}
               onClick={handleClick}
-              className="cursor-default"
+              className="cursor-default block"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
             
             {/* Custom cursor indicator - position based on client coordinates */}
