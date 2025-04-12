@@ -29,10 +29,10 @@ export default function Home() {
     home: <Home />,
     about: <About />,
     projects: <Projects />,
-    skills: <Skills />,
+    // skills: <Skills />,
     terminal: <Terminal />,
     contact: <Contact />,
-    color: <ImageColorPicker />
+    // color: <ImageColorPicker />
   };
 
   // Simulated browser navigation state
@@ -211,11 +211,11 @@ export default function Home() {
           />
 
           <Tab key="projects" title={<div className="flex items-center gap-2"><FiFolder />Projects</div>} />
-          <Tab key="skills" title={<div className="flex items-center gap-2"><FiMonitor />Skills</div>} />
+          {/* <Tab key="skills" title={<div className="flex items-center gap-2"><FiMonitor />Skills</div>} /> */}
           {/* flex: i stole from aaron and thought i might want to include something like a terminal but maybe not anymore. pondering. */}
           {/* <Tab key="terminal" title={<div className="flex items-center gap-2"><RiTerminalBoxFill />Terminal</div>} /> */}
           <Tab key="contact" title={<div className="flex items-center gap-2"><FiMail />Contact</div>} />
-          <Tab key="color" title={<div className="flex items-center gap-2"><FiMail />Color Picker</div>} />
+          {/* <Tab key="color" title={<div className="flex items-center gap-2"><FiMail />Color Picker</div>} /> */}
         </Tabs>
       </div>
 
@@ -281,9 +281,9 @@ export default function Home() {
           // </div>
         )}
 
-        {activeTab === "skills" && (
+        {/* {activeTab === "skills" && (
           <Skills />
-        )}
+        )} */}
 
         {activeTab === "terminal" && (
           <Terminal />
@@ -293,9 +293,9 @@ export default function Home() {
           <Contact />
         )}
 
-        {activeTab === "color" && (
+        {/* {activeTab === "color" && (
           <ImageColorPicker />
-        )}
+        )} */}
       </div>
 
       {/* Footer (outside window) */}
