@@ -223,8 +223,9 @@ export default function Home() {
       <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
         {activeTab === "" && (
           <>
-
-          <BrowserHome />
+          <div className="overflow-y-hidden">
+            <BrowserHome />
+          
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -264,8 +265,10 @@ export default function Home() {
                 </Button>
 
               </div>
+              
 
             </motion.div>
+            </div>
 
           </>
 
