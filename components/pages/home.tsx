@@ -41,7 +41,7 @@ export const BrowserHome = () => {
       </p>
       <p className="text-l font-semibold mb-4 text-gray-500 text-center mx-auto">
 
-        ai/ml | fullstack | project management
+        ai/ml | web dev | project management
       </p>
 
       {/* </div> */}
