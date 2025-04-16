@@ -2,7 +2,7 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "carolyn's carrot farm",
-  description: "portfolio",
+  description: "in-browser browser-type portfolio",
   navItems: [
     {
       label: "Home",
