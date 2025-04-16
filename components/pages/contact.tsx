@@ -31,7 +31,9 @@ export const Contact = () => {
             {/* swap for google form / try the endpoint thing (inspect to get field names and submit endpoint) */}
 
 
-            <h2 className="text-3xl font-bold mb-7 text-center">get in touch!</h2>
+            <h1 className="text-center text-4xl font-bold mb-6 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-pink-400 to-purple-700">
+        let's get in touch!
+      </h1>
 
             <p className="text-l mb-7 text-gray-300 text-center">
                 feel free to reach out for any reason!

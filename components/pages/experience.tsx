@@ -13,8 +13,8 @@ export const Experience = () => {
             ]
         },
 
-        
-        
+
+
         {
             period: 'Jun. 2024 - Dec. 2024',
             title: 'Undergraduate Research Intern - Machine Learning Team Lead',
@@ -31,12 +31,12 @@ export const Experience = () => {
             title: 'Team Member (Profiler, Benchmarker, Designated AI Guy)',
             company: 'UC Merced IndySCC Team HIBOBCATS (now known as FelineOPS)',
             description: `Participated in the SC24 IndySCC (Indy Student Cluster Competition) as part of the UCM team's profiling and benchmarking subgroup. With the goal of maximizing performance and output on AMD Epyc and Intel Xeon clusters, ran different benchmarks like MLPerf for SDXL, BERT and programs like Nanoscale Molecular Dynamics (NAMD). Culminated in a 48-hour competition at SC24, plus a mystery application (Find My Cat), where we competed against teams around the world.`,
-            skills: ['Python', 'PyTorch', 'MLPerf', 'OpenMP','Networking','HPC'],
+            skills: ['Python', 'PyTorch', 'MLPerf', 'OpenMP', 'Networking', 'HPC'],
             highlights: [
                 'Optimized HPL for a peak of 74% theoretical max FLOPS on 8 and 30 node clusters.', 'Fine-tuned a fully reproducible cat detector for the mystery application (YOLOv9, 11,000+ images) to 0.98 mAP and with precision & recall > 0.96.'
             ]
         },
-    
+
         {
             period: 'Jan. 2024 - May. 2024',
             title: 'Data Scientist - Intern',
