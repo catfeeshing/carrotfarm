@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Card, CardBody, CardFooter, Button, Tabs, Tab } from "@heroui/react";
 import { motion } from "framer-motion";
+import { Link } from "@heroui/link";
 
 export const Projects = () => {
 
@@ -131,6 +132,11 @@ export const Projects = () => {
       <h2 className="text-xl text-center font-bold mb-6 text-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
         and publications, and more
       </h2>
+
+      <p className="text-lg text-center mb-6 text-gray-300">
+        this section is currently under construction! more projects are on their way! you can view a few more of them in my <Link href="https://github.com/catfeeshing" target="_blank">github</Link>
+        <br /> <br />
+        </p>
 
       <div className="mx-auto text-center">
         <Tabs>
