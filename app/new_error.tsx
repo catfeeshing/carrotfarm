@@ -12,6 +12,8 @@ import { FaGithub, FaHome, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
 import { FiMonitor, FiFolder, FiMail, FiUser } from 'react-icons/fi';
 
+// delete later/not important/might not work the way I think it will because this is not a real browser
+
 // Subpages
 import { BrowserHome }  from '@/components/pages/home';
 import { Skills } from '@/components/pages/skills';

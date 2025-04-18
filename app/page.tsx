@@ -17,7 +17,7 @@ import { FiMonitor, FiFolder, FiMail, FiUser, FiTerminal } from 'react-icons/fi'
 
 import { BrowserHome } from '@/components/pages/home';
 import { About } from '@/components/pages/about';
-import { Skills } from '@/components/pages/skills';
+// import { Skills } from '@/components/pages/skills';
 import { Projects } from '@/components/pages/projects';
 import { Terminal } from '@/components/pages/terminal';
 import { Contact } from '@/components/pages/contact';
@@ -65,6 +65,16 @@ export default function Home() {
       setActiveTab(browserHistory[historyIndex + 1]);
     }
   };
+
+  // save htis for later, not important feature
+
+  const onScrollNextTab = () => {
+    // if cannot scroll fire off a scrolling event?
+    // if (activeTab === "" || activeTab === "contact") {
+    //   return;
+    // }
+
+  }
 
 
   // function to drag window around maybe
@@ -225,14 +235,14 @@ export default function Home() {
               </div>}
           />
 
-          <Tab
+          {/* <Tab
             key="projects"
             title={
               <div className="flex items-center gap-2">
                 <FiFolder />
                 Projects
               </div>}
-          />
+          /> */}
 
           <Tab
             key="contact"
@@ -246,7 +256,8 @@ export default function Home() {
         {activeTab === "" && (
           <>
             <div className="overflow-y-hidden">
-              <BrowserHome />
+              <BrowserHome 
+              />
 
 
               <motion.div
@@ -291,6 +302,8 @@ export default function Home() {
 
               </motion.div>
             </div>
+
+            
 
           </>
 
