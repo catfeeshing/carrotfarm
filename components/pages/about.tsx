@@ -87,7 +87,7 @@ export const About = () => {
   
                   className="px-3 py-1 bg-gray-700 text-gray-300 rounded-lg text-sm"
                 >
-                  <b>💡 Fun (?) fact!</b> My strange addiction also includes hackathons, and it all started in November 2022 with a computer vision project using YOLOv4.
+                  <b>💡 Fun (?) fact!</b> My strange addiction also includes hackathons, and it all started in November 2022 with a computer vision project using YOLOv4. I've won or placed in 5 out of 7 hackathons I've participated in! :D
                 </Card>
 
                 {/* <br /> */}
@@ -100,7 +100,7 @@ export const About = () => {
 
 
                 <span className="text-gray-300 mb-1">
-                  I'm currently juggling a few things and projects:
+                  I'm currently juggling a few things and projects, but here are my main focuses:
                 </span>
 
                 <span className="text-gray-400">
