@@ -27,6 +27,8 @@
     }
   },
   "rules": {
+    "react/no-unescaped-entities": "warn",
+    "react/jsx-no-comment-textnodes": "warn",
     "no-console": "warn",
     "react/prop-types": "off",
     "react/jsx-uses-react": "off",
