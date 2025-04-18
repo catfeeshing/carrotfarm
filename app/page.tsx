@@ -235,14 +235,14 @@ export default function Home() {
               </div>}
           />
 
-          {/* <Tab
+          <Tab
             key="projects"
             title={
               <div className="flex items-center gap-2">
                 <FiFolder />
                 Projects
               </div>}
-          /> */}
+          />
 
           <Tab
             key="contact"
