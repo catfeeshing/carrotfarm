@@ -139,11 +139,11 @@ export const Projects = () => {
         </p>
 
       <div className="mx-auto text-center">
-        <Tabs>
+        <Tabs className="mb-3">
           <Tab title="All Projects">{renderProjects("All Projects")}</Tab>
           <Tab title="AI/ML">{renderProjects("AI/ML")}</Tab>
           <Tab title="Web Dev">{renderProjects("Web Dev")}</Tab>
-          <Tab title="Publications">{renderProjects("Publications")}</Tab>
+          {/* <Tab title="Publications">{renderProjects("Publications")}</Tab> */}
           <Tab title="Other">{renderProjects("Other")}</Tab>
         </Tabs>
       </div>
