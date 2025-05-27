@@ -212,6 +212,10 @@ export default function Home() {
           className="p-2"
           variant="underlined"
           color="primary"
+          classNames={{
+            tabList: "flex sm:flex-nowrap gap-2 w-full overflow-x-auto flex-wrap",
+            // tab: "flex items-center gap-2 px-3 py-1 rounded-md hover:bg-gray-700 transition-colors",
+          }}
         >
           <Tab
             key=""
