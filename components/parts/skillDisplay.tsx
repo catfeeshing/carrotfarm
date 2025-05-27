@@ -11,7 +11,7 @@ const SkillsDisplay = () => {
     {
       name: "ML/AI",
       color: "success",
-      skills: ["TensorFlow/Keras", "PyTorch", "Scikit", "Pandas"],
+      skills: ["TensorFlow", "PyTorch", "Scikit", "A2A + MCP", "Pandas", "NumPy"],
     },
     {
       name: "Full-Stack",
@@ -21,7 +21,7 @@ const SkillsDisplay = () => {
     {
       name: "Other",
       color: "secondary",
-      skills: ["Git", "Docker","ArcGIS"],
+      skills: ["Git", "GCP", "Docker","ArcGIS"],
     },
   ];
 
