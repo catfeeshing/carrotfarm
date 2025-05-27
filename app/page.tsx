@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Draggable from 'react-draggable';
 // import Image from 'next/image';
 // import {Image} from "@heroui/image";
-import { Card, CardBody, CardFooter, Button, Tabs, Tab, Input } from "@heroui/react";
+import { Card, CardBody, CardFooter, Button, Tabs, Tab, Input, Select, SelectItem, SelectSection } from "@heroui/react";
 import { motion } from "framer-motion";
 import { FaGithub, FaHome, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiTerminalBoxFill } from 'react-icons/ri';
@@ -68,13 +68,13 @@ export default function Home() {
 
   // save htis for later, not important feature
 
-  const onScrollNextTab = () => {
+  // const onScrollNextTab = () => {
     // if cannot scroll fire off a scrolling event?
     // if (activeTab === "" || activeTab === "contact") {
     //   return;
     // }
 
-  }
+  // }
 
 
   // function to drag window around maybe
@@ -206,52 +206,161 @@ export default function Home() {
           </div>
         </div>
 
-        <Tabs
-          selectedKey={activeTab}
-          onSelectionChange={(key) => navigateTo(key as string)}
-          className="p-2"
-          variant="underlined"
-          color="primary"
-          classNames={{
-            tabList: "flex sm:flex-nowrap gap-2 w-full overflow-x-auto flex-wrap",
-          }}
-        >
-          <Tab
-            key=""
-            title={<div className="flex items-center gap-2"><FaHome />Home</div>} />
+        <div className="hidden sm:block">
+          <Tabs
+            selectedKey={activeTab}
+            onSelectionChange={(key) => navigateTo(key as string)}
+            className="p-2"
+            variant="underlined"
+            color="primary"
+            classNames={{
+              tabList: "flex sm:flex-nowrap gap-2 w-full overflow-x-auto flex-wrap",
+            }}
+          >
+            <Tab
+              key=""
+              title={<div className="flex items-center gap-2"><FaHome />Home</div>} 
+            />
+            <Tab
+              key="about"
+              title={
+                <div className="flex items-center gap-2">
+                  <FiUser />
+                  About
+                </div>
+              }
+            />
+            <Tab
+              key="experience"
+              title={
+                <div className="flex items-center gap-2">
+                  <FiFolder />
+                  Experience
+                </div>
+              }
+            />
+            <Tab
+              key="projects"
+              title={
+                <div className="flex items-center gap-2">
+                  <FiFolder />
+                  Projects
+                </div>
+              }
+            />
+            <Tab
+              key="contact"
+              title={<div className="flex items-center gap-2"><FiMail />Contact</div>} 
+            />
+          </Tabs>
+        </div>
 
-          <Tab
-            key="about"
-            title={
-              <div className="flex items-center gap-2">
-                <FiUser />
-                About
-              </div>}
-          />
+                {/* Mobile Dropdown - visible only on mobile */}
+                <div className="sm:hidden p-2">
+          <Select
+            selectedKeys={[activeTab]}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys)[0] as string;
+              navigateTo(selectedKey);
+            }}
+            placeholder="Navigate to..."
+            className="max-w-full"
+            variant="underlined"
+            size="md"
+            classNames={{
+              trigger: "bg-transparent border-b-2 border-gray-600 pb-2",
+              value: "text-white",
+              popoverContent: "bg-gray-800 border border-gray-700 rounded-lg",
+              listbox: "bg-gray-800"
+            }}
+            renderValue={(items) => {
+              const item = items[0];
+              if (!item) return "Navigate to...";
+              
+              const getIcon = (key: string) => {
+                switch(key) {
+                  case "": return <FaHome className="text-sm" />;
+                  case "about": return <FiUser className="text-sm" />;
+                  case "experience": return <FiFolder className="text-sm" />;
+                  case "projects": return <FiFolder className="text-sm" />;
+                  case "contact": return <FiMail className="text-sm" />;
+                  default: return null;
+                }
+              };
+              
+              const getLabel = (key: string) => {
+                switch(key) {
+                  case "": return "Home";
+                  case "about": return "About";
+                  case "experience": return "Experience";
+                  case "projects": return "Projects";
+                  case "contact": return "Contact";
+                  default: return key;
+                }
+              };
+              
+              return (
+                <div className="flex items-center gap-2 text-primary">
+                  {getIcon(item.key as string)}
+                  {getLabel(item.key as string)}
+                </div>
+              );
+            }}
+          >
 
-          <Tab
-            key="experience"
-            title={
-              <div className="flex items-center gap-2">
-                <FiFolder />
-                Experience
-              </div>}
-          />
-
-          <Tab
-            key="projects"
-            title={
-              <div className="flex items-center gap-2">
-                <FiFolder />
-                Projects
-              </div>}
-          />
-
-          <Tab
-            key="contact"
-            title={<div className="flex items-center gap-2"><FiMail />Contact</div>} />
-
-        </Tabs>
+            {/* there is also probably a way to simplify this! fix later */}
+            <SelectItem 
+              key="" 
+              startContent={<FaHome className="text-sm text-gray-400" />}
+              classNames={{
+                base: "hover:bg-gray-700 data-[selected=true]:bg-gray-700/50",
+                title: "text-gray-400"
+              }}
+            >
+              Home
+            </SelectItem>
+            <SelectItem 
+              key="about" 
+              startContent={<FiUser className="text-sm text-gray-400" />}
+              classNames={{
+                base: "data-[selected=true]:bg-gray-700/50",
+                title: "text-gray-400"
+              }}
+            >
+              About
+            </SelectItem>
+            <SelectItem 
+              key="experience" 
+              startContent={<FiFolder className="text-sm text-gray-400" />}
+              classNames={{
+                base: "hover:bg-gray-700 data-[selected=true]:bg-gray-700/50",
+                title: "text-gray-400"
+              }}
+            >
+              Experience
+            </SelectItem>
+            <SelectItem 
+              key="projects" 
+              startContent={<FiFolder className="text-sm text-gray-400" />}
+              classNames={{
+                base: "hover:bg-gray-700 data-[selected=true]:bg-gray-700/50",
+                title: "text-gray-400"
+              }}
+            >
+              Projects
+            </SelectItem>
+            <SelectItem 
+              key="contact" 
+              startContent={<FiMail className="text-sm text-gray-400" />}
+              classNames={{
+                base: "hover:bg-gray-700 data-[selected=true]:bg-gray-700/50",
+                title: "text-gray-400"
+              }}
+            >
+              Contact
+            </SelectItem>
+          </Select>
+        </div>
       </div>
 
       {/* Subpages */}
