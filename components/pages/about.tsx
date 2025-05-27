@@ -85,9 +85,9 @@ export const About = () => {
 
                 <Card
   
-                  className="px-3 py-1 bg-gray-700 text-gray-300 rounded-lg text-sm"
+                  className="px-3 py-1 p-4 bg-gray-700 text-gray-300 rounded-lg text-sm"
                 >
-                  <b>💡 Fun (?) fact!</b> My strange addiction also includes hackathons, and it all started in November 2022 with a computer vision project using YOLOv4. I've won or placed in 5 out of 7 hackathons I've participated in! :D
+                  <b>💡 Fun (?) fact!</b> My strange addiction also includes hackathons, and it all started in November 2022 with a computer vision project using YOLOv4. Although not much compared to most, I've won or placed in 5 out of 7 hackathons I've participated in c: (long recharge time needed...)
                 </Card>
 
                 {/* <br /> */}
@@ -99,15 +99,15 @@ export const About = () => {
             <br /> */}
 
 
-                <span className="text-gray-300 mb-1">
-                  I'm currently juggling a few things and projects, but here are my main focuses:
+                <span className="text-pink-100 mb-1">
+                  I'm currently juggling a few things and projects, from a day job to being an eldest daughter, but here are my main focuses:
                 </span>
 
                 <span className="text-gray-400">
-                  <ul className="list-disc list-inside text-pink-100">
+                  <ul className="list-disc list-inside text-gray-400">
                     <li>building a personal website (this one!)</li>
-                    <li>learning NLP</li>
-                    <li>Mirai Game Project</li>
+                    <li>learning NLP (and fine-tuning a personal assistant for translation help)</li>
+                    <li>Mirai Game Project (out of hiatus!)</li>
                     <li>shuffld, a website for listening to music with strangers</li>
                     <li>unnamed writing website, a Wattpad-esque platform for original writing and characters</li>
                   </ul>
@@ -117,7 +117,7 @@ export const About = () => {
 
               <br />
 
-              <span className="text-gray-300 ">
+              <span className="text-pink-100 ">
                 Computer science has been my dream major since elementary school, a dream born of a need to create, whether it be through the visual and narrative arts or through programming.
                 <br />
                 <br />
@@ -134,7 +134,7 @@ export const About = () => {
               <span className="text-gray-400">
                 <br />
                 <br />
-                When I'm not being a workaholic, you can find me writing my debut novel drafts (I promise they're coming along), doing digital art (from Minecraft skins to larger pieces), translating from Chinese to English, reading, exploring the Honkaiverse, and watching donghua! I also really like being nosy (aka mentoring GDG on Campus: UC Merced against their will).
+                When I'm not being a workaholic, you can find me writing my debut novel drafts (I promise they're coming along), doing digital art (from Minecraft skins to larger pieces), translating Chinese to English for multimedia, reading, exploring the Honkaiverse, and watching donghua! I also really like backseating (aka mentoring GDG on Campus: UC Merced against their will).
               </span>
               {/* </div> */}
             </div>
