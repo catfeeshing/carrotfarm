@@ -59,6 +59,10 @@ import {
       }
     
       return (
+
+        // for future reference: if you change one navbar, you have to change the other one to match!
+        // maybe implement smth to update both later on -- turn into parts?
+
         <HeroUINavbar maxWidth="xl" position="sticky" className="opacity-50">
           <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
             <NavbarBrand as="li" className="gap-3 max-w-fit">
@@ -143,14 +147,51 @@ import {
               </Button>
             </NavbarItem> */}
           </NavbarContent>
+
+          {/* THE PROBLEM */}
     
-          <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+          {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
             <Link isExternal aria-label="Github" href={siteConfig.links.github}>
               <GithubIcon className="text-default-500" />
             </Link>
             <ThemeSwitch />
-            {/* <NavbarMenuToggle /> */}
-          </NavbarContent>
+            <NavbarMenuToggle />
+          </NavbarContent> */}
+
+          {/* begin navbar that shows on smaller screens!! */}
+
+          <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+          
+  
+                <Link isExternal aria-label="LinkedIn" href={siteConfig.links.linkedin}>
+                    <FaLinkedin className="text-default-500 size-5" />
+                </Link>
+                
+                <Link isExternal aria-label="Discord">
+              <Popover placement="bottom" showArrow={true}>
+                <PopoverTrigger onClick={copyDiscord}>
+                    {/* <PopoverButton> */}
+                        <DiscordIcon className="text-default-500 cursor-pointer" />
+                    {/* </PopoverButton> */}
+                </PopoverTrigger>
+                <PopoverContent>
+                    
+                <div>
+                    {/* <div className="text-small font-bold text-center">Discord username copied!</div> */}
+                    <div className="text-tiny text-center">Copied "@ahyjie" to clipboard!</div>
+                </div>
+                </PopoverContent>
+              </Popover>
+              </Link>
+              {/* <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
+                <DiscordIcon className="text-default-500" />
+              </Link> */}
+              <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+                <GithubIcon className="text-default-500" />
+              </Link>
+              {/* <ThemeSwitch /> */}
+            </NavbarContent>
+
     
           <NavbarMenu>
             {searchInput}
