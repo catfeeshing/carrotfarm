@@ -32,16 +32,17 @@ const SkillsDisplay = () => {
           <Card key={category.name} className={`bg-${category.color} bg-opacity-20 border-none shadow-none`}>
             <CardBody className="p-4">
               <div className="flex items-center gap-2 mb-4">
-                <div className={`w-3 h-3 bg-${category.color} rounded-sm`}></div>
+                <div className={`w-3 h-3 bg-${category.color} rounded-sm flex-shrink-0`}></div>
                 <h2 className="text-s font-medium text-white">{category.name}</h2>
               </div>
               <div className="flex flex-col gap-2">
                 {category.skills.map((skill) => (
                   <div
                     key={skill}
-                    className={`p-2 bg-${category.color} bg-opacity-30 text-zinc-300 flex items-center text-s`}
+                    className={`p-2 bg-${category.color} bg-opacity-30 text-zinc-300 flex items-center text-s rounded-sm`}
                   >
-                    <span className="mr-2">□</span> {skill}
+                    {/* <span className="mr-2 flex-shrink-0 mt-0.5">□</span> */}
+                    <span className="break-words leading-tight">{skill}</span>
                   </div>
                 ))}
               </div>
