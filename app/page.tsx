@@ -402,9 +402,10 @@ export default function Home() {
                     variant="flat"
                     color="default"
                     size="lg"
-                    href="https://linkedin.com/in/carolyncui"
+                    // href="https://linkedin.com/in/carolyncui"
                     as="a"
                     target="_blank"
+                    onClick={() => navigateTo("contact")}
                   >
                     Contact
                   </Button>
