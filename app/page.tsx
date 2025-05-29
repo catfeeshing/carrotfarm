@@ -21,7 +21,7 @@ import { About } from '@/components/pages/about';
 import { Projects } from '@/components/pages/projects';
 import { Terminal } from '@/components/pages/terminal';
 import { Contact } from '@/components/pages/contact';
-// import ImageColorPicker from '@/components/pages/colorpicker';
+import ImageColorPicker from '@/components/pages/colorpicker';
 import { Experience } from '@/components/pages/experience';
 
 
@@ -36,7 +36,7 @@ export default function Home() {
     // skills: <Skills />,
     terminal: <Terminal />,
     contact: <Contact />,
-    // color: <ImageColorPicker />
+    color: <ImageColorPicker />,
     experience: <Experience />
   };
 
@@ -154,10 +154,23 @@ export default function Home() {
               // this is not what im looking for nvm
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
+                  console.log("Enter pressed in URL bar");
                   const inputValue = (e.target as HTMLInputElement).value;
 
+                  if (inputValue in pages) {
+                    console.log("internal url:", inputValue);
+                    if (inputValue === "home") {
+                      navigateTo("");
+                      // quick catch for home -- fix later
+                    }
+                    else{
+                      navigateTo(inputValue);
+                    }
+                  }
+                  
+
                   // enter with no input or invalid url -- just a very simple check and can be bypassed but unless someone is actively trying to catch bugs it should be okay for now
-                  if (inputValue === "" || !inputValue.includes(".")) {
+                  else if (inputValue === "" || !inputValue.includes(".")) {
                     return;
                   }
                   // maybe handle w switch in future idk
@@ -168,7 +181,7 @@ export default function Home() {
                   // will ensure the url bar is always accurate bc the placeholder updates automatically
                   // (e.target as HTMLInputElement).value = '';
 
-                  if (inputValue.startsWith("https://carrotfarm.com")) {
+                  else if (inputValue.startsWith("https://carrotfarm.com")) {
                     const tab = inputValue.replace("https://carrotfarm.com/", "");
                     if (!(tab in pages)) {
                       // temporary: in future navigate to 404 page if i want to be extra
@@ -191,8 +204,15 @@ export default function Home() {
                     }
 
                     // everything else
-                  } else {
-                    window.open(inputValue, "_blank");
+                  }
+                  // else if (inputValue in pages) {
+                  //   console.log("internal url:", inputValue);
+                  //   navigateTo(inputValue);
+                  // }
+                  else {
+                    console.log("ext url:", inputValue);
+                    const externalUrl = inputValue.startsWith("http") ? inputValue : `https://${inputValue}`;
+                    window.open(externalUrl, "_blank");
                   }
                 }
               }}
@@ -365,7 +385,7 @@ export default function Home() {
 
       {/* Subpages */}
       <div className="border-x border-b border-gray-700 rounded-b-lg bg-gray-900 mx-auto max-w-6xl p-8 min-h-[70vh] max-h-8 overflow-auto">
-        {activeTab === "" && (
+        {(activeTab === "" || activeTab === "home") && (
           <>
             <div className="overflow-y-hidden">
               <BrowserHome 
@@ -448,9 +468,9 @@ export default function Home() {
           <Contact />
         )}
 
-        {/* {activeTab === "color" && (
+        {activeTab === "color" && (
           <ImageColorPicker />
-        )} */}
+        )}
       </div>
 
       {/* Footer (outside window) */}
