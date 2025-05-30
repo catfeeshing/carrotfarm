@@ -30,7 +30,7 @@ export const Projects = () => {
       category: ["Publications","AI/ML"],
     },
     {
-      key: "",
+      key: 7,
       title: "Mirai Project",
       date: "Dec. 2019 - 2022, Feb. 2025 - Present",
       description: "Upcoming anime-style 2D MMORPG for teens and young adults, built with Unity. Community of 2,500+ and growing. We're just coming out of hiatus and working quietly in the background :) I handle social media and community plus team management! Website and MVP in progress with custom solutions for item layering, login, chat, etc.",
@@ -50,7 +50,7 @@ export const Projects = () => {
       category: ["AI/ML"],
     },
     {
-      key: "",
+      key: 4,
       title: "LocalNote",
       date: "May 2025 - Present",
       description: "Localization project assistant web app for personal use at the moment. Built in LLM to help me with my translations (got tired of alt-tabbing between dictionaries, Google Translate, my notes, etc.)! Disclaimer: GTranslate is used for sanity checking!!!",
@@ -60,7 +60,7 @@ export const Projects = () => {
       category: ["AI/ML", "Web Dev"],
     },
     {
-      key: "",
+      key: 5,
       title: "CarrotKit (Carrot Toolkit)",
       date: "Mar. 2025 - Present",
       description: "Ongoing private (and soon public when there's more to it) project with assorted tools. Current highlight is a custom-made color picker for my Minecraft skin making needs--I realized I have free will and online tools weren't cutting it. Actually, you can interact with a very early and slightly buggy version of it in this portfolio! Enter 'color' in the URL bar to try it out.",
@@ -70,7 +70,7 @@ export const Projects = () => {
       category: ["Web Dev"],
     },
     {
-      key: "",
+      key: 6,
       title: "NASA Space Apps Challenge 2023: Develop the Oracle of DSCOVR",
       date: "Oct. 2023",
       description: "Local event 1st place, global nominee. Cleaned DSCOVR data. Responsible for problem statement and solution formulation, data engineering, model development/testing (attempted different models, incl. LSTM), and presentation. Model is a simple MLP that outputs probability mass indices for varying solar storm strengths based on solar wind data.",
@@ -90,7 +90,7 @@ export const Projects = () => {
     //   category: ["AI/ML", "Web Dev"],
     // },
     {
-      key: "",
+      key: 8,
       title: "Stop Sign Detector",
       date: "November 2022",
       description: "This is not an impressive project. It was mainly copy and paste and a lot of pain with data engineering and image processing. But I'm including it because it marked the start of a path that would change my life :) I also don't think the demo works, but just sharing the code anyhow...",

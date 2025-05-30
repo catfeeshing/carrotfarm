@@ -39,13 +39,12 @@ export default function ImageColorPicker() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isMaximized) {
         setIsMaximized(false);
-        // need more time for the DOM to update after the maximize state changes!
-        // re-render after exiting fullscreen mode
+        // Give more time for the DOM to update after the maximize state changes
         setTimeout(() => {
           if (image) {
             drawImageToCanvas(image);
           }
-        },0);
+        }, 100); // Increased from 0 to 100ms
       }
     };
   
@@ -60,7 +59,10 @@ export default function ImageColorPicker() {
       const img = new Image();
       img.onload = () => {
         setImage(img);
-        drawImageToCanvas(img);
+        // Add a small delay to ensure the image state is updated before drawing
+        setTimeout(() => {
+          drawImageToCanvas(img);
+        }, 10);
       };
       if (e.target && typeof e.target.result === 'string') {
         img.src = e.target.result;
@@ -77,8 +79,13 @@ export default function ImageColorPicker() {
     const ctx = canvas.getContext('2d');
     const imageElement = img as HTMLImageElement;
     
-    // Calculate container max width (account for padding/borders)
-    const containerWidth = containerRef.current.clientWidth - 2; // 4px padding on each side
+    // Wait for the container to be properly sized
+    const containerWidth = containerRef.current.clientWidth - 2;
+    if (containerWidth <= 0) {
+      // Container not ready, try again after a short delay
+      setTimeout(() => drawImageToCanvas(img), 50);
+      return;
+    }
     
     // Set canvas dimensions based on image aspect ratio
     let canvasWidth, canvasHeight;
@@ -249,7 +256,7 @@ export default function ImageColorPicker() {
       if (image) {
         drawImageToCanvas(image);
       }
-    }, 0);
+    }, 100); // Increased from 0 to 100ms
   };
 
   // Calculate magnifier position safely
@@ -304,8 +311,6 @@ export default function ImageColorPicker() {
       {/* Header with title and maximize button */}
       <div className="mb-4 flex justify-between items-center">
         {/* <h2 className="text-xl font-bold text-cyan-500 ">Color Picker</h2> */}
-        <h2 className="text-xl font-bold text-cyan-500 "></h2>
-
         
         {hasImage && (
           <button 
@@ -325,6 +330,24 @@ export default function ImageColorPicker() {
             )}
           </button>
         )}
+
+      {/* Reset */}
+      {hasImage && (
+        <div className="mb-4 flex justify-center">
+          <button 
+            onClick={() => {
+              setImage(null);
+              setSelectedColor(null);
+              setHoveredColor(null);
+              setCopyMessage('');
+            }} 
+            className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 rounded transition-colors"
+          >
+            Reset
+          </button>
+        </div>
+      )}
+
       </div>
       
       {/* Instructions */}
@@ -349,6 +372,7 @@ export default function ImageColorPicker() {
           </label>
         </div>
       )}
+
       
       {/* Container for canvas - Responsive height based on content */}
       <div 
