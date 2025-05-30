@@ -7,11 +7,11 @@ export default function ImageColorPicker() {
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [copyMessage, setCopyMessage] = useState('');
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const zoomCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const fullscreenContainerRef = useRef<HTMLDivElement>(null);
+  const appContainerRef = useRef<HTMLDivElement>(null);
 
   // Handle paste and file drop events
   useEffect(() => {
@@ -34,26 +34,24 @@ export default function ImageColorPicker() {
     return () => document.removeEventListener('paste', handlePaste);
   }, []);
 
-  // Handle fullscreen changes and ESC key for exit
+  // Handle ESC key for exit maximize mode
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        exitFullscreen();
+      if (e.key === 'Escape' && isMaximized) {
+        setIsMaximized(false);
+        // need more time for the DOM to update after the maximize state changes!
+        // re-render after exiting fullscreen mode
+        setTimeout(() => {
+          if (image) {
+            drawImageToCanvas(image);
+          }
+        },0);
       }
     };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
+  
     document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isFullscreen]);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMaximized, image]);
 
   // Process image file
   const handleImageFile = (file: Blob) => {
@@ -80,7 +78,7 @@ export default function ImageColorPicker() {
     const imageElement = img as HTMLImageElement;
     
     // Calculate container max width (account for padding/borders)
-    const containerWidth = containerRef.current.clientWidth - 8; // 4px padding on each side
+    const containerWidth = containerRef.current.clientWidth - 2; // 4px padding on each side
     
     // Set canvas dimensions based on image aspect ratio
     let canvasWidth, canvasHeight;
@@ -243,29 +241,15 @@ export default function ImageColorPicker() {
       });
   };
 
-  // Toggle fullscreen mode
-  const toggleFullscreen = () => {
-    if (isFullscreen) {
-      exitFullscreen();
-    } else {
-      enterFullscreen();
-    }
-  };
-
-  // Enter fullscreen mode
-  const enterFullscreen = () => {
-    if (fullscreenContainerRef.current) {
-      if (fullscreenContainerRef.current.requestFullscreen) {
-        fullscreenContainerRef.current.requestFullscreen();
+  // Toggle maximize mode
+  const toggleMaximize = () => {
+    setIsMaximized(!isMaximized);
+    // When changing modes, we need to redraw to adjust for new container size
+    setTimeout(() => {
+      if (image) {
+        drawImageToCanvas(image);
       }
-    }
-  };
-
-  // Exit fullscreen mode
-  const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
+    }, 0);
   };
 
   // Calculate magnifier position safely
@@ -311,21 +295,26 @@ export default function ImageColorPicker() {
 
   return (
     <div 
-      ref={fullscreenContainerRef}
-      className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white p-4' : 'w-full max-w-3xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md'}`}
+      ref={appContainerRef}
+      className={`${isMaximized ? 'fixed inset-0 z-50 bg-white overflow-auto' : 'w-full max-w-3xl mx-auto bg-gray-100 rounded-lg shadow-md'}`}
+      style={{ 
+        padding: isMaximized ? '1rem' : '1rem',
+      }}
     >
-      {/* Header with title and fullscreen button */}
+      {/* Header with title and maximize button */}
       <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold">Image Color Picker</h2>
+        {/* <h2 className="text-xl font-bold text-cyan-500 ">Color Picker</h2> */}
+        <h2 className="text-xl font-bold text-cyan-500 "></h2>
+
         
         {hasImage && (
           <button 
-            onClick={toggleFullscreen} 
-            className="p-2 rounded-full hover:bg-gray-200 transition-colors"
-            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-            title={isFullscreen ? "Exit fullscreen (ESC)" : "Enter fullscreen"}
+            onClick={toggleMaximize} 
+            className="p-2 text-gray-500 rounded-full hover:bg-gray-200 transition-colors"
+            aria-label={isMaximized ? "Exit full view" : "Full view"}
+            title={isMaximized ? "Exit full view (ESC)" : "Full view"}
           >
-            {isFullscreen ? (
+            {isMaximized ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                 <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
               </svg>
@@ -364,10 +353,10 @@ export default function ImageColorPicker() {
       {/* Container for canvas - Responsive height based on content */}
       <div 
         ref={containerRef} 
-        className={`relative bg-gray-200 rounded-lg overflow-auto ${isFullscreen ? 'flex justify-center' : ''}`}
+        className={`relative bg-gray-200 rounded-lg overflow-auto ${isMaximized ? 'flex justify-center' : ''}`}
         style={{ 
           minHeight: hasImage ? 'auto' : '240px',
-          maxHeight: isFullscreen ? 'calc(100vh - 180px)' : '600px',
+          maxHeight: isMaximized ? 'calc(100vh - 180px)' : '600px',
           padding: '4px',
         }}
       >
@@ -464,10 +453,10 @@ export default function ImageColorPicker() {
         </div>
       )}
       
-      {/* Fullscreen note */}
-      {isFullscreen && (
+      {/* Maximize note */}
+      {isMaximized && (
         <div className="absolute bottom-4 right-4 text-sm text-gray-500">
-          Press ESC to exit fullscreen
+          Press ESC to exit full view
         </div>
       )}
     </div>
