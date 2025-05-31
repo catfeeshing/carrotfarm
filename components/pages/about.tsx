@@ -77,7 +77,7 @@ export const About = () => {
               <span className="text-pink-200 font-semibold">
                 {/* When I'm not programming, you can find me... */}
 
-                I'm somewhat overambitious problem solver with a passion for building community and AI/ML, especially foundation + world models, digital twins, and multiagent systems. I also dip my feet in web dev, game dev, and whatever else catches my eye!
+                I'm a somewhat overambitious problem solver and avid hat wearer with a passion for building community and AI/ML, especially foundation and world models, digital twins, and multiagent systems. I also dip my feet in web dev, game dev, and whatever else catches my eye! I like doing a bit of everything.
 
                 <br />
                 <br />
@@ -87,7 +87,7 @@ export const About = () => {
   
                   className="px-3 py-1 p-4 bg-gray-700 text-gray-300 rounded-lg text-sm"
                 >
-                  <b>💡 Fun (?) fact!</b> My strange addictions include hackathons, and it all started in November 2022 with a computer vision project using YOLOv4. Although not much compared to most, I've won or placed in 5 out of 7 hackathons I've participated in c: (long recharge time needed...)
+                  <b>💡 Fun (?) fact!</b> I also really like hackathons for whatever reason! My strange addiction started in November 2022 with a computer vision project using YOLOv4. Although not much compared to most, I've won or placed in 5 out of 7 hackathons I've participated in c: (long recharge time needed...)
                 </Card>
 
                 {/* <br /> */}
