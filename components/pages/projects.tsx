@@ -43,6 +43,7 @@ export const Projects = () => {
       key: 3,
       title: "IndySCC 2024: Find My Cat - Cat Detector Submission",
       date: "November 2024",
+      image: "https://hips.hearstapps.com/hmg-prod/images/types-of-fluffy-cat-breeds-ragdoll-664670a9d2268.jpg?crop=0.6669811320754717xw:1xh;center,top&resize=980:*",
       description: "Built in under 48 hours, a cat detector fine-tuned on 11,000+ images to find cats and partial cats. Achieved 0.98 mAP and precision/recall > 0.96.",
       tags: ["AI/ML", "Python", "PyTorch", "Computer vision"],
       demoLink: "https://docs.google.com/document/d/1uKgp1HCNMBooS6sxVrL3qG-r6xQUqjhU4KCAsR86UJM/edit?usp=drive_link",
@@ -122,52 +123,70 @@ export const Projects = () => {
       visible: { opacity: 1, y: 0 },
     };
 
+      // consider masonry library as opposed to pure css
+  // ok band aid for now
+
     return (
-      <motion.div
-        className="grid md:grid-cols-3 gap-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+  <motion.div
+    className="columns-1 md:columns-2 lg:columns-3 gap-4"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+  >
+    {filteredProjects.map((project) => (
+      <motion.div 
+        key={project.key} 
+        variants={itemVariants}
+        className="break-inside-avoid-column mb-4"
       >
-        {filteredProjects.map((project) => (
-          <motion.div key={project.key} variants={itemVariants}>
-            <Card className="bg-gray-800 border-gray-700">
-              <CardBody>
-                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                <p className="text-gray-300 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="bg-blue-900 text-xs px-2 py-1 rounded"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </CardBody>
-              <CardFooter className="justify-between">
-              {project.demoLink !== null ? (
-                <Button
-                  size="sm"
-                  variant="flat"
-                  color="primary"
-                  href={project.demoLink}
+        <Card className="bg-gray-800 border-gray-700">
+          <CardBody>
+
+            <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+            <p className="text-sm text-gray-500 mb-2">{project.date}</p>
+
+            {project.image && (
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-48 object-cover rounded mb-4"
+              />
+            )}
+
+            <p className="text-gray-300 mb-4">{project.description}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag, tagIndex) => (
+                <span
+                  key={tagIndex}
+                  className="bg-blue-900 text-xs px-2 py-1 rounded"
                 >
-                  website/demo
-                </Button>
-              ) : null}
-              {project.codeLink !== null ? (
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </CardBody>
+          <CardFooter className="justify-between">
+            {project.demoLink !== null ? (
+              <Button
+                size="sm"
+                variant="flat"
+                color="primary"
+                href={project.demoLink}
+              >
+                website/demo
+              </Button>
+            ) : null}
+            {project.codeLink !== null ? (
               <Button size="sm" variant="flat" href={project.codeLink}>
                 code
               </Button>
-              ) : null}
-              </CardFooter>
-            </Card>
-          </motion.div>
-        ))}
+            ) : null}
+          </CardFooter>
+        </Card>
       </motion.div>
-    );
+    ))}
+  </motion.div>
+);
   };
 
   return (
@@ -179,12 +198,14 @@ export const Projects = () => {
       <h1 className="text-4xl text-center font-bold mb-4 text-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-500">
         projects
       </h1>
-      <h2 className="text-xl text-center font-bold mb-6 text-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+      <br />
+      {/* makes it ugly and not really needed when i have a total of 1 publication */}
+      {/* <h2 className="text-xl text-center font-bold mb-6 text-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
         and publications, and more
-      </h2>
+      </h2> */}
 
-      <p className="text-lg text-center mb-6 text-gray-300">
-        this section is currently under construction! more projects are on their way! you can view a few more of them in my <Link href="https://github.com/catfeeshing" target="_blank">github</Link>
+      <p className="text-lg text-center mb-6 text-gray-300 mx-80">
+        this section is currently under construction! more projects are on their way! you can view a few more of them in my <Link href="https://github.com/catfeeshing" target="_blank" className='text-lg'>github</Link>
         <br /> <br />
         </p>
 
